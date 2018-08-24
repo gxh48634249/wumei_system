@@ -2,6 +2,7 @@ package com.ins.sys.tools;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 /**
  * MD5 加密工具
@@ -38,6 +39,11 @@ public class MD5 {
         }
 
         return src;
+    }
+
+    public static String id(){
+        String uuid = UUID.randomUUID().toString();
+        return encrypt(uuid);
     }
 
 }
