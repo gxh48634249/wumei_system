@@ -1,18 +1,36 @@
 package com.ins.sys.order.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "order_details", schema = "wumei_system", catalog = "")
 public class OrderDetailsEntity {
+
+    @ApiModelProperty("订单详情主键")
     private String detailsId;
+
+    @ApiModelProperty("设备主键")
     private String eqId;
+
+    @ApiModelProperty("用户主键")
     private String userId;
+
+    @ApiModelProperty("订单详情名称")
     private String detailsName;
+
+    @ApiModelProperty("订单详情数量")
     private Integer detailsNumber;
+
+    @ApiModelProperty("供货公司名称")
     private String provideName;
+
+    @ApiModelProperty("订单开始时间")
     private Integer startTime;
+
+    @ApiModelProperty("订单结束时间")
     private Integer endTime;
 
     @Id

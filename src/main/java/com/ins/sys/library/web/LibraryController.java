@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/library")
 @Api(value = "数据字典管理",tags = "数据字典管理",protocols = "1.0-Beta")
+@CrossOrigin()
 public class LibraryController{
 
     @Autowired
@@ -62,6 +64,7 @@ public class LibraryController{
         }
     }
 
+    @Transactional
     @RequestMapping("/deleteLibrary")
     @ApiOperation(value = "删除数据字典",httpMethod = "POST")
     public Result deleteLibrary(String libraryCode) {
@@ -69,9 +72,9 @@ public class LibraryController{
             return new Result(Constant.NULL_PARAM);
         }
         try {
-            LibraryInfoEntity entity = new LibraryInfoEntity();
-            entity.setLibraryId(MD5.encrypt(libraryCode));
-            this.libraryRepository.delete(entity);
+            QLibraryInfoEntity qLibraryInfoEntity = QLibraryInfoEntity.libraryInfoEntity;
+            queryFactory.delete(qLibraryInfoEntity)
+                    .where(qLibraryInfoEntity.libraryCode.eq(libraryCode)).execute();
             return new Result(Constant.OK);
         }
         catch (Exception e){
@@ -134,8 +137,28 @@ public class LibraryController{
         try {
                 JPAQuery<LibraryInfoEntity> jpaQuery = queryFactory.select(qLibraryInfoEntity)
                         .from(qLibraryInfoEntity)
-                        .where(qLibraryInfoEntity.parentCode.eq(libraryCode))
+                        .where(qLibraryInfoEntity.libraryCode.eq(libraryCode))
                         .orderBy(qLibraryInfoEntity.libraryName.desc());
+            return new Result(Constant.SUCCESS_STATUE,"查询成功",jpaQuery.fetch());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new Result(Constant.SERVICE_ERROR);
+        }
+    }
+
+    @RequestMapping("/findByParentCode")
+    @ApiOperation(value = "根据父编码查询数据字典",httpMethod = "POST")
+    public Result findByParentCode(String parentCode) {
+        if(StringTool.isnull(parentCode)) {
+            parentCode = "0";
+        }
+        QLibraryInfoEntity qLibraryInfoEntity = QLibraryInfoEntity.libraryInfoEntity;
+        try {
+            JPAQuery<LibraryInfoEntity> jpaQuery = queryFactory.select(qLibraryInfoEntity)
+                    .from(qLibraryInfoEntity)
+                    .where(qLibraryInfoEntity.parentCode.eq(parentCode))
+                    .orderBy(qLibraryInfoEntity.libraryName.desc());
             return new Result(Constant.SUCCESS_STATUE,"查询成功",jpaQuery.fetch());
         }
         catch (Exception e){

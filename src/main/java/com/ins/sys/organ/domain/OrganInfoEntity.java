@@ -1,16 +1,30 @@
 package com.ins.sys.organ.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "organ_info", schema = "wumei_system", catalog = "")
 public class OrganInfoEntity {
+
+    @ApiModelProperty("单位主键")
     private String organId;
+
+    @ApiModelProperty("单位名称")
     private String organName;
+
+    @ApiModelProperty("单位电话")
     private Integer organPhon;
+
+    @ApiModelProperty("单位领导")
     private String organHead;
+
+    @ApiModelProperty("创建时间")
     private Long createTime;
+
+    @ApiModelProperty("单位地址")
     private String organAddress;
 
     @Id

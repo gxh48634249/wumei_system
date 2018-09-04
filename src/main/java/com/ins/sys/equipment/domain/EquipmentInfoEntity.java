@@ -1,21 +1,45 @@
 package com.ins.sys.equipment.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "equipment_info", schema = "wumei_system", catalog = "")
 public class EquipmentInfoEntity {
+
+    @ApiModelProperty("主键")
     private String eqId;
+
+    @ApiModelProperty("所属分类主键")
     private String classId;
+
+    @ApiModelProperty("所属机构主键")
     private String organId;
+
+    @ApiModelProperty("设备名称")
     private String eqName;
+
+    @ApiModelProperty("品牌")
     private String eqBrand;
+
+    @ApiModelProperty("型号")
     private String eqModel;
+
+    @ApiModelProperty("设别规格")
     private String eqSpec;
+
+    @ApiModelProperty("所属分类")
     private String eqClass;
-    private Integer createTime;
+
+    @ApiModelProperty("创建时间")
+    private Long createTime;
+
+    @ApiModelProperty("创建人")
     private String createUser;
+
+    @ApiModelProperty("设备单价")
     private Integer eqPrice;
 
     @Id
@@ -100,11 +124,11 @@ public class EquipmentInfoEntity {
 
     @Basic
     @Column(name = "create_time")
-    public Integer getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Integer createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 

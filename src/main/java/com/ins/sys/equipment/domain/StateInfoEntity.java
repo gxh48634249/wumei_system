@@ -1,16 +1,33 @@
 package com.ins.sys.equipment.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "state_info", schema = "wumei_system", catalog = "")
 public class StateInfoEntity {
+
+    @ApiModelProperty("设备主键")
     private String eqId;
+
+    @ApiModelProperty("主键")
     private String stateId;
+
+    @ApiModelProperty("状态名称")
     private String stateName;
+
+    @ApiModelProperty("状态编码")
     private String stateCode;
-    private Integer endTime;
+
+    @ApiModelProperty("结束时间")
+    private Long endTime;
+
+    @ApiModelProperty("开始时间")
+    private Long startTime;
+
+    @ApiModelProperty("数量")
     private Integer number;
 
     @Basic
@@ -54,12 +71,22 @@ public class StateInfoEntity {
     }
 
     @Basic
+    @Column(name = "start_time")
+    public Long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    @Basic
     @Column(name = "end_time")
-    public Integer getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 
